@@ -16,10 +16,10 @@ def read_file_and_find_links(eml_file_path):
                 soup = BeautifulSoup(html_content, 'html.parser')
                 for a_tag in soup.find_all('a'):
                     href_attribute = a_tag.get('href')
-                    print(f"Found link: {href_attribute}")
+                    return(href_attribute)
                 break  
         else:
-            print("No HTML part found in the email body.")
+            return("No HTML part found in the email body.")
 
             
     
@@ -27,4 +27,4 @@ def read_file_and_find_links(eml_file_path):
 
 file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-13.eml'
 
-read_file_and_find_links(file_path)
+# read_file_and_find_links(file_path)

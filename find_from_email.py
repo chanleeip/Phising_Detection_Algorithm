@@ -16,13 +16,13 @@ def read_files_and_find_from_email(eml_file_path):
         if len(b) == 2:
             # Extract the content between < and >
             c = b[1].split('>')[0]
-            print( c)
+            return( c)
         else:
-            print("No data")
+            return("No data")
             
     
 
 # Example usage
 file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-13.eml'
 
-read_files_and_find_from_email(file_path)
+# read_files_and_find_from_email(file_path)

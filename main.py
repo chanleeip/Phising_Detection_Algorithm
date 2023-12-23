@@ -1,7 +1,17 @@
-import find_from_email
+import find_links
 import os
 import requests
 import json
+import find_spf
+import math
+import find_dkim_check
+import find_dkim_dmarc
+from urllib.parse import quote_plus
+from phisingwords import keywords
+import find_sending_time
+import find_email_body
+import find_reply_id
+import find_from_email
 # all_files
 directory_path = '/Users/admin/Downloads/Phishing_Email _Samples'
 files_dict={}
@@ -12,8 +22,9 @@ for filename in os.listdir(directory_path):
 
 
 #Senders Email Address - (20 points)
+        #Higher is Better
         
-# res = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=d125e6f49c764b6abc44caf939c95b6f&email=rpewu@cfyy43yo35.com")
+# res = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=d125e6f49c764b6abc44caf939c95b6f&email=snpgq@0uzs45dvsx.com")
 # response=json.loads(res.content)
 # scores = {
 #    "is_valid_format": 2 if response["is_valid_format"]["value"] else -2,
@@ -31,4 +42,86 @@ for filename in os.listdir(directory_path):
 
 
 #Links in Email - (25 points)
+        #Higher is better
+
+# urls=find_links.read_file_and_find_links('/Users/admin/Downloads/Phishing_Email _Samples/sample-2222.eml')
+# url1="www.example.com"
+# encoded_url1=quote_plus(url1)
+# res=requests.get(f"https://www.ipqualityscore.com/api/json/url/M0o3v7trKHU834GHUmqj8CJ8MMFDDTZ4/{encoded_url1}")
+# response=(json.loads(res.content))
+# print(response)
+# scores = {
+# #    "success": 2 if response["success"] else -4,
+# #     "unsafe": -4 if response["unsafe"]else 2,
+# #     "dns_valid": 1 if response["dns_valid"]else -2,
+# #     "parking": 0 if response["parking"]else -2,
+# #     "spamming": -4 if response["spamming"]else 2,
+# #     "malware": -4 if response["malware"] else 2,
+# #     "phishing": -4 if response["phishing"] else 2,
+# #     "suspicious": -4 if response["suspicious"] else 2,
+#         "risk_score":float(25-(response["risk_score"]/4))
+# }
+# overall_score = sum(scores[key] for key in scores.keys())
+# print(overall_score)
+        
+
+# #SPF Record Check
+#         #Higher is Better
+# status=find_spf.read_files_and_find_spf_record("/Users/admin/Downloads/Phishing_Email _Samples/sample-13.eml")
+# if status=="Pass":
+#         overall_score=15
+# else:
+#         overall_score=0
+
+# print(overall_score)
+        
+#DKIM CHECK
+        #Higher is Better
+# status=find_dkim_check.read_file_and_find_dkim_check("/Users/admin/Downloads/Phishing_Email _Samples/sample-998.eml")
+# if status=="Pass":
+#         overall_score=15
+# else:
+#         overall_score=0
+
+# print(overall_score)
+        
+#DMARC CHECK
+        #HIgher is Better
+# status=find_dkim_dmarc.read_files_and_find_dkim_check("/Users/admin/Downloads/Phishing_Email _Samples/sample-2089.eml")
+# if status=="Pass":
+#         overall_score=10
+# else:
+#         overall_score=0
+
+# print(overall_score)
+        
+#Content Analysis
+        #Higher is Better
+# content=find_email_body.extract_body_from_eml("/Users/admin/Downloads/Phishing_Email _Samples/sample-13.eml")
+# found_keywords = [keyword for keyword in keywords["phishing_keywords"] if keyword in content]
+
+# if found_keywords:
+#         print("not safe",found_keywords)
+# else:
+#         print("safe")
+
+
+#Unsual message behaviour
+# time=find_sending_time.extract_sending_time("/Users/admin/Downloads/Phishing_Email _Samples/sample-101.eml")
+# hour = time.hour
+# if 22 < hour or (0 <= hour < 8):
+#         print("Phishy Time Detected:")
+# else:
+#         print("Safe Time:")
+        
+
+#Reply to Field
+# reply_id=find_reply_id.read_files_and_find_reply_id('/Users/admin/Downloads/Phishing_Email _Samples/sample-2146.eml')
+# sender_id=find_from_email.read_files_and_find_from_email('/Users/admin/Downloads/Phishing_Email _Samples/sample-2146.eml')
+# if reply_id == sender_id:
+#         print("not phisy")
+# else:
+#         print("phisy")
+        
+#IP reputation of the sender
         

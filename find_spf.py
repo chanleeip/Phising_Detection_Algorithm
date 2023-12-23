@@ -11,11 +11,11 @@ def read_files_and_find_spf_record(eml_file_path):
         file_content = BytesParser(policy=policy.default).parse(file)
         a=file_content.get('Received-SPF', '')
         b=a.split()
-        print(b[0])
+        return(b[0])
             
     
 
 # Example usage
 file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-13.eml'
 
-read_files_and_find_spf_record(file_path)
+# read_files_and_find_spf_record(file_path)
