@@ -3,7 +3,7 @@ from email import policy
 from email.parser import BytesParser
 from bs4 import BeautifulSoup
 
-def read_files_and_find_links(eml_file_path):
+def read_file_and_find_links(eml_file_path):
     if not os.path.exists(eml_file_path):
         print(f"file doesnt exist")
         return
@@ -27,4 +27,4 @@ def read_files_and_find_links(eml_file_path):
 
 file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-13.eml'
 
-read_files_and_find_links(file_path)
+read_file_and_find_links(file_path)
