@@ -16,11 +16,11 @@ def read_files_and_find_sender_ip(eml_file_path):
         a=file_content.get('Authentication-Results', '')
         b=re.findall(r'\((.*?)\)',a)
         c=(re.findall(r'[0-9.]+',b[0]))
-        print(c[0])
+        return(c[0])
             
     
 
 # Example usage
-file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-13.eml'
+file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-995.eml'
 
-read_files_and_find_sender_ip(file_path)
+# print(read_files_and_find_sender_ip(file_path))

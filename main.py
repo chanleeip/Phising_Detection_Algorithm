@@ -12,6 +12,8 @@ import find_sending_time
 import find_email_body
 import find_reply_id
 import find_from_email
+import find_sender_ip
+import find_smpts_sender_domain
 # all_files
 directory_path = '/Users/admin/Downloads/Phishing_Email _Samples'
 files_dict={}
@@ -41,11 +43,11 @@ for filename in os.listdir(directory_path):
 # print(overall_score)
 
 
-#Links in Email - (25 points)
-        #Higher is better
+# Links in Email - (25 points)
+#         Higher is better
 
 # urls=find_links.read_file_and_find_links('/Users/admin/Downloads/Phishing_Email _Samples/sample-2222.eml')
-# url1="www.example.com"
+# url1="thcultarfdes.co.uk"
 # encoded_url1=quote_plus(url1)
 # res=requests.get(f"https://www.ipqualityscore.com/api/json/url/M0o3v7trKHU834GHUmqj8CJ8MMFDDTZ4/{encoded_url1}")
 # response=(json.loads(res.content))
@@ -123,5 +125,44 @@ for filename in os.listdir(directory_path):
 # else:
 #         print("phisy")
         
-#IP reputation of the sender
+# #IP reputation of the sender-ipadress
         
+# sender_ip=find_sender_ip.read_files_and_find_sender_ip('/Users/admin/Downloads/Phishing_Email _Samples/sample-995.eml')
+# print(sender_ip)
+# url = 'https://api.abuseipdb.com/api/v2/check'
+
+# querystring = {
+#     'ipAddress': sender_ip,
+#     'maxAgeInDays': '90'
+# }
+
+# headers = {
+#     'Accept': 'application/json',
+#     'Key': '10fb519c40e1baa017cfb56ddadd248709f13b11f864903a7ef7ebbc776738049c0e8271c5d79d79'
+# }
+# res=requests.request(method='GET', url=url, headers=headers, params=querystring)
+# respone=(json.loads(res.text))
+# score=(10-(respone["abuseConfidenceScore"]/10))
+# print(score)
+
+#IP reputation of the sender-impts-ip
+        
+sender_smtps__ip=find_smpts_sender_domain.read_files_and_find_smpts_server_domain('/Users/admin/Downloads/Phishing_Email _Samples/sample-995.eml')
+url1=sender_smtps__ip.strip(';')
+print(url1)
+encoded_url1=quote_plus(url1)
+res=requests.get(f"https://www.ipqualityscore.com/api/json/url/M0o3v7trKHU834GHUmqj8CJ8MMFDDTZ4/{encoded_url1}")
+response=(json.loads(res.content))
+scores = {
+#    "success": 2 if response["success"] else -4,
+#     "unsafe": -4 if response["unsafe"]else 2,
+#     "dns_valid": 1 if response["dns_valid"]else -2,
+#     "parking": 0 if response["parking"]else -2,
+#     "spamming": -4 if response["spamming"]else 2,
+#     "malware": -4 if response["malware"] else 2,
+#     "phishing": -4 if response["phishing"] else 2,
+#     "suspicious": -4 if response["suspicious"] else 2,
+        "risk_score":float(25-(response["risk_score"]/4))
+}
+overall_score = sum(scores[key] for key in scores.keys())
+print(overall_score)
