@@ -70,8 +70,8 @@ This project uses Poetry for dependency management. Follow these steps to set up
 4. Create a `.env` file in the project root and add the following API keys:
     ```env
     EMAIL_VALIDATION="your-email-validation-api-key"
-    URL_VALIDATION_API="your-url-validation-api-key"
-    IP_VALIDATION_API="your-ip-validation-api-key"
+    URL_VALIDATION="your-url-validation-api-key"
+    IP_VALIDATION="your-ip-validation-api-key"
     ```
 
     *Get your API keys from the following URLs:*
