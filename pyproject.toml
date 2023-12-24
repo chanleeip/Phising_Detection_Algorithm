@@ -12,6 +12,7 @@ requests = "^2.31.0"
 bs4 = "^0.0.1"
 poetry-plugin-dotenv = "^0.5.3"
 tqdm = "^4.66.1"
+typer = "^0.9.0"
 
 
 

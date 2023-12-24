@@ -12,7 +12,7 @@ def extract_sending_time(file_path):
             return datetime_obj
 
 # # Example usage
-# eml_file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-574.eml'
+# eml_file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-001.eml'
 # sending_time = extract_sending_time(eml_file_path)
 
 # print("Sending Time:", sending_time)
