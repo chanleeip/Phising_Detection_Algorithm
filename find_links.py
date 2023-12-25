@@ -21,6 +21,7 @@ def read_file_and_find_links(eml_file_path):
             href_tags = soup.find_all('a', href=True)
             # print(href_tags)
             href_values = [tag.get('href') for tag in href_tags]
+            # print(type(href_values))
             return href_values
      
         
@@ -32,11 +33,13 @@ def read_file_and_find_links(eml_file_path):
                     soup = BeautifulSoup(html_content, 'html.parser')
                     for a_tag in soup.find_all('a'):
                         href_attribute = [a_tag.get('href')]
+                        # print(type(href_attribute[0]))
                         return(href_attribute)
                     break  
             
     with open(eml_file_path,'r')as file:
         a_tags_match = re.findall(r'<a[^>]*\s*href\s*=\s*["\'](.*?)["\']', content, re.DOTALL | re.IGNORECASE)
+        # print(type(a_tags_match[0]))
         return [a_tags_match]
         # else:
         #     extracted_html = html_match.group(0)

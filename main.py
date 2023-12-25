@@ -98,14 +98,17 @@ def run_script(path_given):
                 tqdm.write("Processing Links present in Email")
 
                 urls=find_links.read_file_and_find_links(i)
-                for index,j in enumerate(urls):
+                # print(urls)
+                index=0
+                for op,j in enumerate(urls):
                         # print(j)
                         # files_dict[os.path.basename(i)]["details"]["links_present"].append(j)
                         encoded_url1=quote_plus(j)
+                        # print(len(urls))
                         res=requests.get(f"https://www.ipqualityscore.com/api/json/url/{os.environ.get('URL_VALIDATION')}/{encoded_url1}")
                         response=(json.loads(res.content))
                         # print(response)
-                        if(response["success"]):
+                        if(response.get("success",True)):
                                 scores = {
                                 #    "success": 2 if response["success"] else -4,
                                 #     "unsafe": -4 if response["unsafe"]else 2,
@@ -154,11 +157,13 @@ def run_script(path_given):
                                         files_dict[os.path.basename(i)]["details"]["links_present"][index]["Suspicious"] = "No"
                                 files_dict[os.path.basename(i)]["details"]["links_present"][index]["Risk_Score"] = response["risk_score"]
 
+                                # print(files_dict)
                                 overall_score = sum(scores[key] for key in scores.keys())
                                 files_dict[os.path.basename(i)]["score"]=10
                                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
+                                index+=1
 
-                        # tqdm.write("20% Completed") 
+                        tqdm.write("20% Completed") 
         # print(files_dict)
                 
                 '''SPF Record Check (15 points)
@@ -208,6 +213,7 @@ def run_script(path_given):
                         #Higher is Better'''
                 tqdm.write("Checking Content of the Email for any Phishing/Scam Keywords")
                 content=find_email_body.extract_body_from_eml(i)
+                # print(content)
                 found_keywords = [keyword for keyword in keywords["phishing_keywords"] if keyword in content]
 
                 if found_keywords:
@@ -309,7 +315,7 @@ def run_script(path_given):
 
                 ipAdress={"Safe":"Yes" if response["unsafe"] else "No",
                         "Domain_name":response["domain"],
-                        "IP_address":response["ip_address"],
+                        # "IP_address":response["ip_address"],
                         "server_name":response["server"],
                         "dns_valid":"Yes" if response["dns_valid"]else "No",
                         "Domain_name":response["domain"],
