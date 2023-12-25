@@ -11,7 +11,7 @@ def read_files_and_find_sender_ip(eml_file_path):
 
 # Loop through files in the directory
 
-    with open(file_path, 'rb') as file:
+    with open(eml_file_path, 'rb') as file:
         file_content = BytesParser(policy=policy.default).parse(file)
         a=file_content.get('Authentication-Results', '')
         b=re.findall(r'\((.*?)\)',a)
@@ -21,6 +21,6 @@ def read_files_and_find_sender_ip(eml_file_path):
     
 
 # Example usage
-file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-995.eml'
+# file_path = '/Users/admin/Downloads/Phishing_Email _Samples/sample-995.eml'
 
 # print(read_files_and_find_sender_ip(file_path))

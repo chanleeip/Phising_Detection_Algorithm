@@ -159,7 +159,7 @@ def run_script(path_given):
 
                                 # print(files_dict)
                                 overall_score = sum(scores[key] for key in scores.keys())
-                                files_dict[os.path.basename(i)]["score"]=10
+                                # files_dict[os.path.basename(i)]["score"]=10
                                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
                                 index+=1
 
@@ -177,7 +177,7 @@ def run_script(path_given):
                         overall_score=-10
                         files_dict[os.path.basename(i)]["details"]["SPF_Record_Check"]= "Fail/Error"
 
-                files_dict[os.path.basename(i)]["score"]=15
+                # files_dict[os.path.basename(i)]["score"]=15
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
                 tqdm.write("30% Completed") 
 
@@ -275,22 +275,27 @@ def run_script(path_given):
                 }
                 res=requests.request(method='GET', url=url, headers=headers, params=querystring)
                 respone=(json.loads(res.text))
-                # print(respone["data"])
-                ipAdress={"ip-adress":respone["data"]["ipAddress"],
-                        "isPublic":respone["data"]["isPublic"],
-                        "Is_It_Whitelisted":respone["data"]["isWhitelisted"],
-                        "Risk_Score":respone["data"]["abuseConfidenceScore"],
-                        "Usage_Type":respone["data"]["usageType"],
-                        "Domain_name":respone["data"]["domain"],
-                        "Is_it_Tor":respone["data"]["isTor"],
-                        "Total_Reports_previous":respone["data"]["totalReports"],
-                        "Last_report_date":respone["data"]["lastReportedAt"]
-                        }
-                files_dict[os.path.basename(i)]["details"]["IP_adress_details"] = ipAdress
-                score=(10-(respone["data"]["abuseConfidenceScore"]/10))
-                files_dict[os.path.basename(i)]["score"]=10
-                files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(score)
-
+                print(respone)
+                if "data" in respone:
+                        ipAdress={"ip-adress":respone["data"]["ipAddress"],
+                                "isPublic":respone["data"]["isPublic"],
+                                "Is_It_Whitelisted":respone["data"]["isWhitelisted"],
+                                "Risk_Score":respone["data"]["abuseConfidenceScore"],
+                                "Usage_Type":respone["data"]["usageType"],
+                                "Domain_name":respone["data"]["domain"],
+                                "Is_it_Tor":respone["data"]["isTor"],
+                                "Total_Reports_previous":respone["data"]["totalReports"],
+                                "Last_report_date":respone["data"]["lastReportedAt"]
+                                }
+                        files_dict[os.path.basename(i)]["details"]["IP_adress_details"] = ipAdress
+                        score=(10-(respone["data"]["abuseConfidenceScore"]/10))
+                        # files_dict[os.path.basename(i)]["score"]=10
+                        files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(score)
+                else:
+                        ipAdress={"ip-adress":"not found"}
+                        files_dict[os.path.basename(i)]["details"]["IP_adress_details"] = ipAdress
+                        score=-10
+                        files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(score) 
 
                 '''IP reputation of the sender-impts-ip (10 points) '''
                 tqdm.write("Checking Reputation of Sender IMPTS-IP")
@@ -299,7 +304,7 @@ def run_script(path_given):
                 # print(url1)
                 encoded_url1=quote_plus(url1)
                 res=requests.get(f"https://www.ipqualityscore.com/api/json/url/{os.environ.get('URL_VALIDATION')}/{encoded_url1}")
-                response=(json.loads(res.content))
+                # response=(json.loads(res.content))
                 # print(response)
                 scores = {
                 #    "success": 2 if response["success"] else -4,
@@ -329,5 +334,5 @@ def run_script(path_given):
                 overall_score = sum(scores[key] for key in scores.keys())
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
                 tqdm.write("100% Completed") 
-        return (json.dumps(files_dict,indent=2))
+        return (json.dumps(files_dict,indent=2), files_dict[os.path.basename(i)]["score"])
 
