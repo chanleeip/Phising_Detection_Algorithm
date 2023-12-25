@@ -1,18 +1,18 @@
-import find_links
+from files import find_links
 import os
 import requests
 import json
-import find_spf
-import find_dkim_check
-import find_dkim_dmarc
+from files import find_spf
+from files import find_dkim_check
+from files import find_dkim_dmarc
 from urllib.parse import quote_plus
-from phisingwords import keywords
-import find_sending_time
-import find_email_body
-import find_reply_id
-import find_from_email
-import find_sender_ip
-import find_smpts_sender_domain
+from files.phisingwords import keywords
+from files import find_sending_time
+from files import find_email_body
+from files import find_reply_id
+from files import find_from_email
+from files import find_sender_ip
+from files import find_smpts_sender_domain
 import os
 from tqdm import tqdm
 
@@ -42,7 +42,7 @@ def run_script(path_given):
         for i in files_path.keys():
                 tqdm.write("Processing Email Adress")
                 # print(i)
-                email_id=find_from_email.read_files_and_find_from_email("/Users/admin/Downloads/Phishing_Email _Samples/sample-2222.eml")
+                email_id=find_from_email.read_files_and_find_from_email(i)
                 res = requests.get(f"https://emailvalidation.abstractapi.com/v1/?api_key={os.environ.get('EMAIL_VALIDATION')}&email={email_id}")
                 response=json.loads(res.content)
                 # print(f"https://emailvalidation.abstractapi.com/v1/?api_key={os.environ.get('EMAIL_VALIDATION')}&email={email_id}")

@@ -1,4 +1,4 @@
-import main
+from files import main
 import typer
 import os
 app=typer.Typer()
