@@ -135,4 +135,5 @@ This project uses Poetry for dependency management and Docker for containerizati
 
 This script is a basic implementation and may not catch all phishing attempts. Always be vigilant when opening emails and never click on links or attachments from unknown senders.
 
+Currently, It can run only single eml due to API limitations. But it is possible to run batch of files.
 
