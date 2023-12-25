@@ -177,7 +177,7 @@ def run_script(path_given):
                         overall_score=-10
                         files_dict[os.path.basename(i)]["details"]["SPF_Record_Check"]= "Fail/Error"
 
-                files_dict[os.path.basename(i)]["score"]=10
+                files_dict[os.path.basename(i)]["score"]=15
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
                 tqdm.write("30% Completed") 
 
@@ -189,7 +189,7 @@ def run_script(path_given):
                         overall_score=15
                         files_dict[os.path.basename(i)]["details"]["DKIM_check"] = "Pass"
                 else:
-                        overall_score=0
+                        overall_score-15
                         files_dict[os.path.basename(i)]["details"]["DKIM_check"] = "Fail/Error"
 
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
@@ -203,7 +203,7 @@ def run_script(path_given):
                         overall_score=10
                         files_dict[os.path.basename(i)]["details"]["DMARC_check"] = "Pass"
                 else:
-                        overall_score=0
+                        overall_score=-10
                         files_dict[os.path.basename(i)]["details"]["DMARC_check"] = "Fail/Error"
 
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
@@ -217,10 +217,10 @@ def run_script(path_given):
                 found_keywords = [keyword for keyword in keywords["phishing_keywords"] if keyword in content]
 
                 if found_keywords:
-                        overall_score=10
+                        overall_score=-10
                         files_dict[os.path.basename(i)]["details"]["Any_Phishing_Keyword_Found"] = "Yes"
                 else:
-                        overall_score=0
+                        overall_score=25
                         files_dict[os.path.basename(i)]["details"]["Any_Phishing_Keyword_Found"] = "No"
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
                 tqdm.write("70% Completed") 
@@ -232,11 +232,11 @@ def run_script(path_given):
                 hour = time.hour
                 if 22 < hour or (0 <= hour < 8):
                         print("Phishy Time Detected:")
-                        overall_score=10
+                        overall_score=-10
                         files_dict[os.path.basename(i)]["details"]["Sending_Time"] = "Unusual"
                 else:
                         print("Safe Time:")
-                        overall_score=0
+                        overall_score=15
                         files_dict[os.path.basename(i)]["details"]["Sending_Time"] = "Normal"
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
                 tqdm.write("80% Completed") 
@@ -253,7 +253,7 @@ def run_script(path_given):
                         files_dict[os.path.basename(i)]["details"]["Mismatch_btw_reply-to_and_sender"] = "Yes"
                 else:
                         print("phisy")
-                        overall_score=0
+                        overall_score=-10
                         files_dict[os.path.basename(i)]["details"]["Mismatch_btw_reply-to_and_sender"] = "No"
                 files_dict[os.path.basename(i)]["score"]=int(files_dict[os.path.basename(i)]["score"])+int(overall_score)
                 tqdm.write("85% Completed") 
