@@ -47,7 +47,7 @@ The script requires the following Python packages:
 - `math`
 - `urllib.parse`
 
-## Setup
+## Setup 
 
 This project uses Poetry for dependency management. Follow these steps to set up the project:
 
@@ -83,8 +83,53 @@ This project uses Poetry for dependency management. Follow these steps to set up
 
 To use the script, run it with Poetry:
 ```bash
-poetry run python3 main.py
+poetry run python3 cli.py
 ```
+
+## Setup and Usage with Docker
+
+This project uses Poetry for dependency management and Docker for containerization. Follow these steps to set up and run the project:
+
+1. Install Docker (if not already installed).
+
+2. Clone the repository:
+    ```bash
+    git clone https://github.com/chanleeip/Phishing_Detection_Algorithm.git
+    cd Phishing_Detection_Algorithm
+    ```
+3. Create a `.env` file in the project root and add the following API keys:
+    ```env
+    EMAIL_VALIDATION="your-email-validation-api-key"
+    URL_VALIDATION="your-url-validation-api-key"
+    IP_VALIDATION="your-ip-validation-api-key"
+    ```
+
+    *Get your API keys from the following URLs:*
+    - [Email Validation API-www.abstractapi.com](https://www.abstractapi.com/api/email-verification-validation-api)
+    - [URL Validation API-www.ipqualityscore.com](https://www.ipqualityscore.com)
+    - [IP Validation API-www.abuseipdb.com](https://abuseipdb.com)
+
+
+4. Build the Docker image (replace `<name>` with your desired image name):
+    The .env file should be present in the root folder
+    ```bash
+    docker build -t <name> --build-arg ENV_FILE=.env -f Dockerfile .
+    ```
+
+5. Run the Docker container (replace `<container_name>` and `<name>` with your desired container and image names):
+    ```bash
+    docker run -it -v "$(pwd):/host" --name <container_name> <name> bash
+    ```
+
+6. Inside the container, activate the virtual environment:
+    ```bash
+    source .venv/bin/activate
+    ```
+
+7. Run the script using Poetry:
+    ```bash
+    poetry run python3 cli.py --path /host/<path_of_files>
+    ```
 
 ## Note
 
