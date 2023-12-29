@@ -34,62 +34,66 @@ def run_script(path_given):
         else:
                 print("Error")
 
+        # print(files_path)
 
-
-                ''' Senders Email Address - (20 points)
+        ''' Senders Email Address - (20 points)
                         Higher is Better'''
         # print(files_dict)
         for i in files_path.keys():
                 tqdm.write("Processing Email Adress")
                 # print(i)
                 email_id=find_from_email.read_files_and_find_from_email(i)
-                res = requests.get(f"https://emailvalidation.abstractapi.com/v1/?api_key={os.environ.get('EMAIL_VALIDATION')}&email={email_id}")
-                response=json.loads(res.content)
-                # print(f"https://emailvalidation.abstractapi.com/v1/?api_key={os.environ.get('EMAIL_VALIDATION')}&email={email_id}")
-                scores = {
-                "is_valid_format": 2 if response["is_valid_format"]["value"] else -2,
-                "is_free_email": 2 if response["is_free_email"]["value"] else 0,
-                "is_disposable_email": -2 if response["is_disposable_email"]["value"] else 2,
-                "is_role_email": 2 if response["is_role_email"]["value"] else -2,
-                "is_catchall_email": -2 if response["is_catchall_email"]["value"] else 2,
-                "is_smtp_valid": 2 if response["is_smtp_valid"]["value"] else -2,
-                "deliverability": 2 if response["deliverability"]== "DELIVERABLE" else -2,
-                "quality_score": float(response.get("quality_score")) * 10 
-                }
+                if email_id:
+                        res = requests.get(f"https://emailvalidation.abstractapi.com/v1/?api_key={os.environ.get('EMAIL_VALIDATION')}&email={email_id}")
+                        response=json.loads(res.content)
+                        # print(response)
+                        # print(f"https://emailvalidation.abstractapi.com/v1/?api_key={os.environ.get('EMAIL_VALIDATION')}&email={email_id}")
+                        scores = {
+                        "is_valid_format": 2 if response["is_valid_format"]["value"] else -2,
+                        "is_free_email": 2 if response["is_free_email"]["value"] else 0,
+                        "is_disposable_email": -2 if response["is_disposable_email"]["value"] else 2,
+                        "is_role_email": 2 if response["is_role_email"]["value"] else -2,
+                        "is_catchall_email": -2 if response["is_catchall_email"]["value"] else 2,
+                        "is_smtp_valid": 2 if response["is_smtp_valid"]["value"] else -2,
+                        "deliverability": 2 if response["deliverability"]== "DELIVERABLE" else -2,
+                        "quality_score": float(response.get("quality_score")) * 10 
+                        }
 
-                if response["is_valid_format"]["value"]:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Valid_format"] = "Yes"
-                else:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Valid_format"] = "No"
-                if response["is_free_email"]["value"]:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Free-Email"] = "Yes"
-                else:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Free-Email"] = "No"
-                if response["is_disposable_email"]["value"] :
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Disposable-Email"] = "Yes"
-                else:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Disposable-Email"] = "No"
-                if response["is_role_email"]["value"]:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Role-Email"] = "Yes"
-                else:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Role-Email"] = "No"
-                if response["is_catchall_email"]["value"] :
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Catchall-Email"] = "Yes"
-                else:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Catchall-Email"] = "No"
-                if  response["is_smtp_valid"]["value"]:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["SMTP-Valid"] = "Yes"
-                else:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["SMTP-Valid"] = "No"
-                if  response["deliverability"]== "DELIVERABLE":
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Deliverable"] = "Yes"
-                else:
-                        files_dict[os.path.basename(i)]["details"]["sender_id"]["Deliverable"] = "No"
+                        if response["is_valid_format"]["value"]:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Valid_format"] = "Yes"
+                        else:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Valid_format"] = "No"
+                        if response["is_free_email"]["value"]:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Free-Email"] = "Yes"
+                        else:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Free-Email"] = "No"
+                        if response["is_disposable_email"]["value"] :
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Disposable-Email"] = "Yes"
+                        else:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Disposable-Email"] = "No"
+                        if response["is_role_email"]["value"]:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Role-Email"] = "Yes"
+                        else:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Role-Email"] = "No"
+                        if response["is_catchall_email"]["value"] :
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Catchall-Email"] = "Yes"
+                        else:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Is-Catchall-Email"] = "No"
+                        if  response["is_smtp_valid"]["value"]:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["SMTP-Valid"] = "Yes"
+                        else:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["SMTP-Valid"] = "No"
+                        if  response["deliverability"]== "DELIVERABLE":
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Deliverable"] = "Yes"
+                        else:
+                                files_dict[os.path.basename(i)]["details"]["sender_id"]["Deliverable"] = "No"
 
 
-                overall_score = sum(scores[key] for key in scores.keys())
-                files_dict[os.path.basename(i)]["score"]=int(overall_score)
-
+                        overall_score = sum(scores[key] for key in scores.keys())
+                        files_dict[os.path.basename(i)]["score"]=int(overall_score)
+                else:
+                        print("email not found")
+                        files_dict[os.path.basename(i)]["score"]=int(0)
                 tqdm.write("10% Completed")   
 
                 '''Links in Email - (25 points) 
@@ -275,7 +279,7 @@ def run_script(path_given):
                 }
                 res=requests.request(method='GET', url=url, headers=headers, params=querystring)
                 respone=(json.loads(res.text))
-                print(respone)
+                # print(respone)
                 if "data" in respone:
                         ipAdress={"ip-adress":respone["data"]["ipAddress"],
                                 "isPublic":respone["data"]["isPublic"],
@@ -304,7 +308,7 @@ def run_script(path_given):
                 # print(url1)
                 encoded_url1=quote_plus(url1)
                 res=requests.get(f"https://www.ipqualityscore.com/api/json/url/{os.environ.get('URL_VALIDATION')}/{encoded_url1}")
-                # response=(json.loads(res.content))
+                response=(json.loads(res.content))
                 # print(response)
                 scores = {
                 #    "success": 2 if response["success"] else -4,
