@@ -1,0 +1,873 @@
+Delivered-To: nithinnmanickam@gmail.com
+Received: by 2002:a17:907:171b:b0:a26:8806:a430 with SMTP id
+ le27csp1739540ejc; Sat, 23 Dec 2023 23:00:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHXr4t0kWVhmrzI9r0m/F26kPP0hMdUY082zJiaIsLeUVy5caohHl4OqssfXlNHMi9dx9j6
+X-Received: by 2002:a05:6214:5088:b0:67a:ad52:1f9d with SMTP id
+ kk8-20020a056214508800b0067aad521f9dmr4978940qvb.68.1703401241532; Sat, 23
+ Dec 2023 23:00:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1703401241; cv=none; d=google.com;
+ s=arc-20160816;
+ b=Z0fosPI8P2OoYfyPZSISSOlEmuYH7w3BkhVrksl1WPy4zzYGK8KUMfqgeSIXungTGn
+ 41iVsuwh3rBHa9nH5wqUlUTxySTznNe/OhStXuSpUXMzWZlFTmQZiWtzpIMD647RWRBc
+ iTO4uG5LuVolnBB/FoFjJRtZGkQ4aHqGAWLu24M+na8uchR7j3roun4xjpsAqkOYvYsk
+ rXHk6IgiXm8uhIYABAbmqTeKdIZD8eLclh+6ngiUuhgm9FLWItekw5NWZRJNqivdTclh
+ NZEhkw5jQ8yP/A+CtF8+6/4fQ0fPHTjpJk+HqVI8ZE5htlBExOck8Ir1GhJU/+AtgNxM pY2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+ h=feedback-id:mime-version:subject:message-id:to:reply-to:from:date
+ :dkim-signature:dkim-signature;
+ bh=2dD3hg+1xrsYkMIOQprDsdpbmyCMjF68q06eZSBuDy4=;
+ fh=slI3LvPR3z13pxE4MEz8hz3R4qgdm2ZaZryKeSRywTI=;
+ b=fjctXimdB+pYr6tMHWzrugJWtLGG9OKlcvt0VRasTbQvdbX9CPdg5KO946dhKJ2926
+ ZBDNVKWiFr975s2uO7VZ7jubOUpToBAqzmBgeTjeclktJLU5Ndr9cq95uvsqIfn+kjMy
+ EYNe9AlYw+x30eP1vLVimfXFZhI7U8R7FLV+7Y9qWC5jiA5LuOZgbcPmuQh4Whk4pUBs
+ uXkQcVnON2HPVFQwDoOoH80DHeVWM2ispFWklRUK3DgXIa1kYDIygeXDZwUNwEeFlubA
+ DuEFgIJvc7Fuk0DdJD0RXVOQM5INatVTfyo9LkIuvqHVYb7xTJ1MHnRmrNzH3cKAWvNw rs1g==
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass
+ header.i=@easydmarc.com header.s=7hpvle6sl4tqw3ti6asjdwfg4smn5nmi
+ header.b=nZvZUMz+; dkim=pass header.i=@amazonses.com
+ header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=N3zMYSJP; spf=pass
+ (google.com: domain of
+ 0100018c9aa0397d-06596306-eb30-4e9f-a7e0-1da03ab22ccc-000000@notifications.easydmarc.com
+ designates 54.240.8.26 as permitted sender)
+ smtp.mailfrom=0100018c9aa0397d-06596306-eb30-4e9f-a7e0-1da03ab22ccc-000000@notifications.easydmarc.com;
+ dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=easydmarc.com
+Return-Path: <0100018c9aa0397d-06596306-eb30-4e9f-a7e0-1da03ab22ccc-000000@notifications.easydmarc.com>
+Received: from a8-26.smtp-out.amazonses.com (a8-26.smtp-out.amazonses.com.
+ [54.240.8.26]) by mx.google.com with ESMTPS id
+ y12-20020a0cf14c000000b0067f84b32003si7163777qvl.85.2023.12.23.23.00.41 for
+ <nithinnmanickam@gmail.com> (version=TLS1_2
+ cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128); Sat, 23 Dec 2023 23:00:41
+ -0800 (PST)
+Received-SPF: pass (google.com: domain of
+ 0100018c9aa0397d-06596306-eb30-4e9f-a7e0-1da03ab22ccc-000000@notifications.easydmarc.com
+ designates 54.240.8.26 as permitted sender) client-ip=54.240.8.26;
+Authentication-Results: mx.google.com; dkim=pass header.i=@easydmarc.com
+ header.s=7hpvle6sl4tqw3ti6asjdwfg4smn5nmi header.b=nZvZUMz+; dkim=pass
+ header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono
+ header.b=N3zMYSJP; spf=pass (google.com: domain of
+ 0100018c9aa0397d-06596306-eb30-4e9f-a7e0-1da03ab22ccc-000000@notifications.easydmarc.com
+ designates 54.240.8.26 as permitted sender)
+ smtp.mailfrom=0100018c9aa0397d-06596306-eb30-4e9f-a7e0-1da03ab22ccc-000000@notifications.easydmarc.com;
+ dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=easydmarc.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+ s=7hpvle6sl4tqw3ti6asjdwfg4smn5nmi; d=easydmarc.com; t=1703401241;
+ h=Date:From:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type;
+ bh=YmtaPoyyAvB+CC7tMtaE+NoKSdzhO3skXyJkoiak8xo=;
+ b=nZvZUMz+DsFgyYVO5DcKi5R7UFer2EHK/8dL5vL16wFtMmJhzWoQ84WnF8Q3N/hZ
+ riVySB83+k0t2iRIl+YyOaV7t7e3m+w1gbe2ygKoQGr/ULLK/XL/+iDwzirYtwdv56I
+ Zh+ejE/TIrtNrQcC+6yDAaMfgSNQRP5XalckAWjg=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+ s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1703401241;
+ h=Date:From:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type:Feedback-ID;
+ bh=YmtaPoyyAvB+CC7tMtaE+NoKSdzhO3skXyJkoiak8xo=;
+ b=N3zMYSJP8J5B8R6vKGI4Kk2f0WIDgbbWpOBLbm9Bnz9gUUVQxLpcDWr+5lVe6uOP
+ NF4flkA2UTSHX2gletj+K18aVVdaga2SvDW7xLepOO1jY0EYYWNPWYtHqaw2fjz+daB
+ K1oQFALLuba7Cf9DB8VKTl5ifdeigoc0x+Glkebk=
+Date: Sun, 24 Dec 2023 07:00:40 +0000
+From: EasyDMARC <team@easydmarc.com>
+Reply-To: team@easydmarc.com
+To: nithinnmanickam@gmail.com
+Message-ID: <0100018c9aa0397d-06596306-eb30-4e9f-a7e0-1da03ab22ccc-000000@email.amazonses.com>
+Subject: Confirm Your Email Address
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_Part_2082_1137794813.1703401239841"
+Feedback-ID: 1.us-east-1.b+84CcTCmKU8bUstMkYUw3rIGB6KG1myY0nsMdhdUVo=:AmazonSES
+X-SES-Outgoing: 2023.12.24-54.240.8.26
+
+------=_Part_2082_1137794813.1703401239841
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+------=_Part_2082_1137794813.1703401239841
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office">
+
+<head>
+  <title></title>
+  <!--[if !mso]><!-->
+  <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+  <!--<![endif]-->
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1">
+  <style type=3D"text/css">
+    #outlook a {
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+
+  </style>
+  <!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]-->
+  <!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]-->
+  <!--[if !mso]><!-->
+  <link href=3D"https://fonts.googleapis.com/css2?family=3DInter:wght@400;7=
+00" rel=3D"stylesheet" type=3D"text/css">
+  <style type=3D"text/css">
+    @import url(https://fonts.googleapis.com/css2?family=3DInter:wght@400;7=
+00);
+
+  </style>
+  <!--<![endif]-->
+  <style type=3D"text/css">
+    @media only screen and (min-width:576px) {
+      .mj-column-per-50 {
+        width: 50% !important;
+        max-width: 50%;
+      }
+
+      .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+    }
+
+  </style>
+  <style media=3D"screen and (min-width:576px)">
+    .moz-text-html .mj-column-per-50 {
+      width: 50% !important;
+      max-width: 50%;
+    }
+
+    .moz-text-html .mj-column-per-100 {
+      width: 100% !important;
+      max-width: 100%;
+    }
+
+  </style>
+  <style type=3D"text/css">
+    @media only screen and (max-width:575px) {
+      table.mj-full-width-mobile {
+        width: 100% !important;
+      }
+
+      td.mj-full-width-mobile {
+        width: auto !important;
+      }
+    }
+
+  </style>
+  <style type=3D"text/css">
+    .d-sm-block {
+      display: none !important;
+    }
+
+    @media only screen and (min-width: 576px) {
+      .d-sm-block {
+        display: block !important;
+      }
+    }
+
+    .check-blue {
+      background-image: url(https://easydmarc.com/tools/img/email/check-blu=
+e.png) !important;
+      background-repeat: no-repeat !important;
+      background-position: left center !important;
+    }
+
+    .link {
+      color: #1186FC !important;
+      text-decoration: none !important;
+    }
+
+    .header td {
+      display: flex !important;
+    }
+
+    .menu-navbar {
+      display: flex;
+      margin-right: 0 !important;
+      align-items: center !important;
+    }
+
+    @media only screen and (min-width: 576px) {
+      .menu-navbar {
+        margin-right: 150px !important;
+      }
+    }
+
+    .menu-navbar-link {
+      color: #00A9E0 !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      margin-right: 0 !important;
+      margin-left: 4px !important;
+      padding: 16px 8px !important;
+    }
+
+    @media only screen and (min-width: 576px) {
+      .menu-navbar-link {
+        color: #00A9E0 !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        margin-right: 8px !important;
+        margin-left: 0 !important;
+      }
+    }
+
+    .btn-primary {
+      white-space: nowrap !important;
+      font-family: Inter, Arial, serif !important;
+      background-color: #2DBDEC !important;
+      color: #FFFFFF !important;
+      text-decoration: none !important;
+      text-transform: none !important;
+      border-radius: 4px !important;
+      text-align: left !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      border: 2px solid #2DBDEC !important;
+      padding: 6px 16px !important;
+    }
+
+    .btn-primary-outline {
+      font-family: Inter, Arial, serif !important;
+      background-color: #FFFFFF;
+      color: #2DBDEC !important;
+      border-radius: 4px !important;
+      text-decoration: none !important;
+      text-transform: none !important;
+      text-align: left !important;
+      font-size: 16px !important;
+      border: 2px solid #2DBDEC !important;
+      line-height: 24px !important;
+      padding: 6px 16px !important;
+    }
+
+    .text-btn {
+      text-align: left !important;
+      color: #00A9E0 !important;
+      font-size: 16px !important;
+      text-decoration: none !important;
+    }
+
+    .mr-3 {
+      margin-right: 16px;
+    }
+
+    .ml-0 {
+      margin-left: 0 !important;
+    }
+
+    .bg-light-blue {
+      background-color: #00A9E0 !important;
+    }
+
+    .text-start {
+      text-align: start !important;
+    }
+
+    .text-black {
+      color: #272727 !important;
+    }
+
+    .d-flex {
+      display: flex !important;
+    }
+
+    .justify-content-between {
+      justify-content: space-between !important;
+    }
+
+    .flex-row {
+      flex-direction: row !important;
+    }
+
+    .flex-column {
+      flex-direction: column !important;
+    }
+
+    .width-96 {
+      width: 96% !important;
+    }
+
+    .bg-light-grey {
+      background-color: #F8F9FB !important;
+    }
+
+    @media only screen and (max-width: 576px) {
+      .border-right-top-white-5 {
+        border-top: solid 5px #FFFFFF !important;
+      }
+
+      .margin-top-5 {
+        margin-top: 5px !important;
+      }
+
+      .main-tools-section {
+        width: 100% !important;
+        margin-top: 5px !important;
+      }
+
+      .dmarc-policy-section {
+        width: 100% !important;
+        margin-top: 5px !important;
+      }
+
+      .padding-right-0 {
+        padding-right: 0 !important;
+      }
+
+      .padding-left-10 {
+        padding-left: 10px !important;
+      }
+    }
+
+    @media only screen and (min-width: 576px) {
+      .border-right-top-white-5 {
+        border-right: solid 5px #FFFFFF !important;
+      }
+
+      .main-tools-section {
+        margin-right: 3px !important;
+      }
+
+      .dmarc-policy-section {
+        width: 31%;
+        margin-right: 17px !important;
+      }
+
+      .padding-left-0-48 {
+        padding-left: 29px !important;
+      }
+    }
+
+  </style>
+</head>
+
+<body style=3D"word-spacing:normal;background-color:#FDFDFF;">
+  <div style=3D"background-color:#FDFDFF;">
+    <table align=3D"center" class=3D"header" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"background:#1B2C74;backgr=
+ound-color:#1B2C74;width:100%;">
+      <tbody>
+        <tr>
+          <td>
+            <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" class=3D"header-outlook" role=3D"presentation" =
+style=3D"width:800px;" width=3D"800" bgcolor=3D"#1B2C74" ><tr><td style=3D"=
+line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+            <div style=3D"margin:0px auto;max-width:800px;">
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                <tbody>
+                  <tr>
+                    <td style=3D"direction:ltr;font-size:0px;padding:20px 0=
+;text-align:center;">
+                      <!--[if mso | IE]><table role=3D"presentation" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"menu-navbar-out=
+look" style=3D"vertical-align:top;width:400px;" ><![endif]-->
+                      <div class=3D"mj-column-per-50 mj-outlook-group-fix m=
+enu-navbar" style=3D"font-size:0px;text-align:left;direction:ltr;display:in=
+line-block;vertical-align:top;width:100%;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                          <tbody>
+                            <tr>
+                              <td align=3D"center" style=3D"font-size:0px;p=
+adding:0;padding-top:25px;word-break:break-word;">
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;border=
+-spacing:0px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"width:300px;">
+                                        <img src=3D"https://easydmarc.com/t=
+ools/img/wordmark-easy-white.png" style=3D"border:0;display:block;outline:n=
+one;text-decoration:none;height:auto;width:100%;font-size:16px;" width=3D"3=
+00" height=3D"auto" />
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!--[if mso | IE]></td><td class=3D"d-sm-block-outloo=
+k" style=3D"vertical-align:top;width:400px;" ><![endif]-->
+                      <div class=3D"mj-column-per-50 mj-outlook-group-fix d=
+-sm-block" style=3D"font-size:0px;text-align:left;direction:ltr;display:inl=
+ine-block;vertical-align:top;width:100%;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                          <tbody>
+                            <tr>
+                              <td align=3D"center" style=3D"font-size:0px;p=
+adding:0;word-break:break-word;">
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;border=
+-spacing:0px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"width:120px;">
+                                        <img src=3D"https://easydmarc.com/t=
+ools/img/email/laptop.png" style=3D"border:0;display:block;outline:none;tex=
+t-decoration:none;height:auto;width:100%;font-size:16px;" width=3D"120" hei=
+ght=3D"auto" />
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!--[if mso | IE]></td></tr></table><![endif]-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:800px;"=
+ width=3D"800" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-hei=
+ght-rule:exactly;"><![endif]-->
+    <div style=3D"margin:0px auto;max-width:800px;">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"width:100%;">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0;text-al=
+ign:center;">
+              <!--[if mso | IE]><table role=3D"presentation" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-ali=
+gn:top;width:800px;" ><![endif]-->
+              <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=
+=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertic=
+al-align:top;width:100%;">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                  <tbody>
+                    <tr>
+                      <td align=3D"left" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;">
+                        <div style=3D"font-family:Inter, Arial, serif;font-=
+size:24px;font-weight:700;line-height:26px;text-align:left;color:#00A9E0;">=
+Dear nithinn,</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"left" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;">
+                        <div style=3D"font-family:Inter, Arial, serif;font-=
+size:16px;line-height:26px;text-align:left;color:#1B2C74;">We're happy you'=
+re here!</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"left" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;">
+                        <div style=3D"font-family:Inter, Arial, serif;font-=
+size:16px;line-height:26px;text-align:left;color:#1B2C74;">Confirm your ema=
+il address by clicking the button below, and join our cybersecurity communi=
+ty.</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"left" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;">
+                        <div style=3D"font-family:Inter, Arial, serif;font-=
+size:16px;line-height:26px;text-align:left;color:#1B2C74;">Let=E2=80=99s fi=
+ght against fraud together!</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"left" vertical-align=3D"middle" style=3D=
+"font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"border-collapse:separate;line-height:=
+100%;">
+                          <tbody>
+                            <tr>
+                              <td align=3D"center" bgcolor=3D"#2DBDEC" role=
+=3D"presentation" style=3D"border:none;border-radius:4px;cursor:auto;mso-pa=
+dding-alt:6px 16px;background:#2DBDEC;" valign=3D"middle">
+                                <a href=3D"https://uac.easydmarc.com/realms=
+/easydmarc/login-actions/action-token?key=3DeyJhbGciOiJIUzI1NiIsInR5cCIgOiA=
+iSldUIiwia2lkIiA6ICJjMzFmNjY5Yi02ZmUyLTQ5NGYtODZjMC1hZjk2MDk0ZmM5NGQifQ.eyJ=
+leHAiOjE3MDM0MDE1MzksImlhdCI6MTcwMzQwMTIzOSwianRpIjoiNTc4Y2Q4Y2EtOWQ3Zi00Y2=
+E3LTk4N2UtYjM2Yjg5NjNjMmIzIiwiaXNzIjoiaHR0cHM6Ly91YWMuZWFzeWRtYXJjLmNvbS9yZ=
+WFsbXMvZWFzeWRtYXJjIiwiYXVkIjoiaHR0cHM6Ly91YWMuZWFzeWRtYXJjLmNvbS9yZWFsbXMv=
+ZWFzeWRtYXJjIiwic3ViIjoiY2YzMjJjMDItZWYxNy00OGViLWFlMWUtMjMyY2FmZDQ4YjZmIiw=
+idHlwIjoidmVyaWZ5LWVtYWlsIiwiYXpwIjoiZG1hcmMtYXBwIiwibm9uY2UiOiI1NzhjZDhjYS=
+05ZDdmLTRjYTctOTg3ZS1iMzZiODk2M2MyYjMiLCJlbWwiOiJuaXRoaW5ubWFuaWNrYW1AZ21ha=
+WwuY29tIiwiYXNpZCI6IjIzZDcwNTZlLTdiMTctNGZmMy04YjFlLWE4YjU1OTI4MzlkZC52N05y=
+bGJUcXBDZy5hZGFhMDYyMi0xMjYyLTRkMDAtOWE2Mi1iODhlYWIzODJiOWQiLCJhc2lkIjoiMjN=
+kNzA1NmUtN2IxNy00ZmYzLThiMWUtYThiNTU5MjgzOWRkLnY3TnJsYlRxcENnLmFkYWEwNjIyLT=
+EyNjItNGQwMC05YTYyLWI4OGVhYjM4MmI5ZCJ9.reICDfTcHMsc0BRaS6_f11zUZj5bcFLqxzcX=
+tEnHO_I&amp;client_id=3Ddmarc-app&amp;tab_id=3Dv7NrlbTqpCg" style=3D"displa=
+y:inline-block;background:#2DBDEC;color:#FFFFFF;font-family:Inter, Arial, s=
+erif;font-size:16px;font-weight:normal;line-height:24px;margin:0;text-decor=
+ation:none;text-transform:none;padding:6px 16px;mso-padding-alt:0px;border-=
+radius:4px;" target=3D"_blank"> Confirm my Email Address </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"left" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;">
+                        <div style=3D"font-family:Inter, Arial, serif;font-=
+size:16px;line-height:26px;text-align:left;color:#1B2C74;">If you have any =
+questions, please <a class=3D"text-btn" href=3D"mailto:support@easydmarc.us=
+">contact us.</a></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"left" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;">
+                        <div style=3D"font-family:Inter, Arial, serif;font-=
+size:16px;font-weight:700;line-height:26px;text-align:left;color:#1B2C74;">=
+Regards, The EasyDMARC Team</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" role=3D"presentation" style=3D"background:#E1E6EC;background-color:#E1E6E=
+C;width:100%;">
+      <tbody>
+        <tr>
+          <td>
+            <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width=
+:800px;" width=3D"800" bgcolor=3D"#E1E6EC" ><tr><td style=3D"line-height:0p=
+x;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+            <div style=3D"margin:0px auto;max-width:800px;">
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                <tbody>
+                  <tr>
+                    <td style=3D"direction:ltr;font-size:0px;padding:20px 0=
+;text-align:center;">
+                      <!--[if mso | IE]><table role=3D"presentation" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vert=
+ical-align:top;width:800px;" ><![endif]-->
+                      <div class=3D"mj-column-per-100 mj-outlook-group-fix"=
+ style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;=
+vertical-align:top;width:100%;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                          <tbody>
+                            <tr>
+                              <td align=3D"left" style=3D"font-size:0px;pad=
+ding:10px 25px;word-break:break-word;">
+                                <!--[if mso | IE]><table align=3D"left" bor=
+der=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" ><tr><t=
+d><![endif]-->
+                                <table align=3D"left" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;displ=
+ay:inline-table;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"padding:4px;vertical-ali=
+gn:middle;">
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"border-radius:3px;width=
+:30px;">
+                                          <tbody>
+                                            <tr>
+                                              <td style=3D"font-size:0;heig=
+ht:30px;vertical-align:middle;width:30px;">
+                                                <a href=3D"https://www.face=
+book.com/EasyDMARC/" target=3D"_blank">
+                                                  <img height=3D"30" src=3D=
+"https://easydmarc.com/tools/img/email/fb-stroked.png" style=3D"border-radi=
+us:3px;display:block;" width=3D"30" />
+                                                </a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <!--[if mso | IE]></td><td><![endif]-->
+                                <table align=3D"left" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;displ=
+ay:inline-table;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"padding:4px;vertical-ali=
+gn:middle;">
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"border-radius:3px;width=
+:30px;">
+                                          <tbody>
+                                            <tr>
+                                              <td style=3D"font-size:0;heig=
+ht:30px;vertical-align:middle;width:30px;">
+                                                <a href=3D"https://www.link=
+edin.com/company/easydmarc/mycompany/" target=3D"_blank">
+                                                  <img height=3D"30" src=3D=
+"https://easydmarc.com/tools/img/email/in-stroked.png" style=3D"border-radi=
+us:3px;display:block;" width=3D"30" />
+                                                </a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <!--[if mso | IE]></td><td><![endif]-->
+                                <table align=3D"left" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;displ=
+ay:inline-table;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"padding:4px;vertical-ali=
+gn:middle;">
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"border-radius:3px;width=
+:30px;">
+                                          <tbody>
+                                            <tr>
+                                              <td style=3D"font-size:0;heig=
+ht:30px;vertical-align:middle;width:30px;">
+                                                <a href=3D"https://twitter.=
+com/easydmarc" target=3D"_blank">
+                                                  <img height=3D"30" src=3D=
+"https://easydmarc.com/tools/img/email/tw-stroked.png" style=3D"border-radi=
+us:3px;display:block;" width=3D"30" />
+                                                </a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <!--[if mso | IE]></td><td><![endif]-->
+                                <table align=3D"left" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;displ=
+ay:inline-table;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"padding:4px;vertical-ali=
+gn:middle;">
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"border-radius:3px;width=
+:30px;">
+                                          <tbody>
+                                            <tr>
+                                              <td style=3D"font-size:0;heig=
+ht:30px;vertical-align:middle;width:30px;">
+                                                <a href=3D"https://t.me/eas=
+ydmarc" target=3D"_blank">
+                                                  <img height=3D"30" src=3D=
+"https://easydmarc.com/tools/img/email/tg-stroked.png" style=3D"border-radi=
+us:3px;display:block;" width=3D"30" />
+                                                </a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <!--[if mso | IE]></td><td><![endif]-->
+                                <table align=3D"left" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;displ=
+ay:inline-table;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"padding:4px;vertical-ali=
+gn:middle;">
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"border-radius:3px;width=
+:30px;">
+                                          <tbody>
+                                            <tr>
+                                              <td style=3D"font-size:0;heig=
+ht:30px;vertical-align:middle;width:30px;">
+                                                <a href=3D"https://www.yout=
+ube.com/channel/UCVqnutdqR6bpMLvAnb3Ycbw" target=3D"_blank">
+                                                  <img height=3D"30" src=3D=
+"https://easydmarc.com/tools/img/email/yt-stroked.png" style=3D"border-radi=
+us:3px;display:block;" width=3D"30" />
+                                                </a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <!--[if mso | IE]></td><td><![endif]-->
+                                <table align=3D"left" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"float:none;displ=
+ay:inline-table;">
+                                  <tbody>
+                                    <tr>
+                                      <td style=3D"padding:4px;vertical-ali=
+gn:middle;">
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"border-radius:3px;width=
+:30px;">
+                                          <tbody>
+                                            <tr>
+                                              <td style=3D"font-size:0;heig=
+ht:30px;vertical-align:middle;width:30px;">
+                                                <a href=3D"https://www.redd=
+it.com/r/easydmarc/" target=3D"_blank">
+                                                  <img height=3D"30" src=3D=
+"https://easydmarc.com/tools/img/email/rd-stroked.png" style=3D"border-radi=
+us:3px;display:block;" width=3D"30" />
+                                                </a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <!--[if mso | IE]></td></tr></table><![endi=
+f]-->
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!--[if mso | IE]></td></tr></table><![endif]-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" role=3D"presentation" style=3D"background:#EFF2F5;background-color:#EFF2F=
+5;width:100%;">
+      <tbody>
+        <tr>
+          <td>
+            <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width=
+:800px;" width=3D"800" bgcolor=3D"#EFF2F5" ><tr><td style=3D"line-height:0p=
+x;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+            <div style=3D"margin:0px auto;max-width:800px;">
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                <tbody>
+                  <tr>
+                    <td style=3D"direction:ltr;font-size:0px;padding:20px 0=
+;text-align:center;">
+                      <!--[if mso | IE]><table role=3D"presentation" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vert=
+ical-align:top;width:800px;" ><![endif]-->
+                      <div class=3D"mj-column-per-100 mj-outlook-group-fix"=
+ style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;=
+vertical-align:top;width:100%;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                          <tbody>
+                            <tr>
+                              <td align=3D"left" style=3D"font-size:0px;pad=
+ding:10px 25px;word-break:break-word;">
+                                <div style=3D"font-family:Inter, Arial, ser=
+if;font-size:12px;line-height:16px;text-align:left;color:#1B2C74;">Read our=
+ <a href=3D"https://easydmarc.com/blog/privacy-policy/" class=3D"link">Priv=
+acy Policy</a> and <a href=3D"https://easydmarc.com/blog/terms-of-service/"=
+ class=3D"link">Terms of Use</a> at <a class=3D"link" href=3D"https://easyd=
+marc.com/web">easydmarc.com</a><br>
+                                  <a href=3D"tel:+1-888-563-5277" class=3D"=
+link">Tel: +1-888-563-5277</a><br> =C2=A9 EASYDMARC 2023 | All Rights Reser=
+ved<br> 651 North Broad Street, 206, DE 19709 Middletown<br>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!--[if mso | IE]></td></tr></table><![endif]-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
+
+------=_Part_2082_1137794813.1703401239841--
